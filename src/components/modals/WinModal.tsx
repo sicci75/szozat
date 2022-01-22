@@ -74,11 +74,11 @@ export const WinModal = ({
                     as="h3"
                     className="text-lg leading-6 font-medium text-gray-900"
                   >
-                    You won!
+                    Nyertél!
                   </Dialog.Title>
                   <div className="mt-2">
                     <MiniGrid guesses={guesses} />
-                    <p className="text-sm text-gray-500">Great job.</p>
+                    <p className="text-sm text-gray-500">Szép munka!</p>
                   </div>
                 </div>
               </div>
@@ -91,7 +91,7 @@ export const WinModal = ({
                     handleShare()
                   }}
                 >
-                  Share
+                  Megosztás
                 </button>
               </div>
             </div>
