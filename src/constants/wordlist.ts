@@ -1,11 +1,5 @@
 import { Word } from "../lib/statuses";
-// import { toWord } from "./utils";
-import { VALIDGUESSES } from "./validGuesses";
+import words from "./hungarian-puzzles.json"
+import { toWord } from "./utils";
 
-// const localWords = [
-//   ['a', 'd', 'ó', 'í', 'v'],
-//   ['a', 'd', 'o', 'm', 'a'],
-// ]
-
-// export const WORDS: Word[] = localWords.map(toWord);
-export const WORDS: Word[] = VALIDGUESSES;
+export const WORDS: Word[] = words.map(toWord);
