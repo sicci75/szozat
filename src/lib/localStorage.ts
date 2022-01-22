@@ -1,8 +1,10 @@
+import { Word } from "./statuses"
+
 const gameStateKey = 'gameState'
 
 type StoredGameState = {
-  guesses: string[]
-  solution: string
+  guesses: Word[]
+  solution: Word
 }
 
 export const saveGameStateToLocalStorage = (gameState: StoredGameState) => {

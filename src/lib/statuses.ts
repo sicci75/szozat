@@ -51,13 +51,19 @@ export type CharStatus = 'absent' | 'present' | 'correct'
 
 export type CharValue = (typeof CHAR_VALUES)[number];
 
+export type Word = readonly CharValue[];
+
+export function isCharValue(value: string): value is CharValue {
+  return CHAR_VALUES.includes(value as any);
+}
+
 export const getStatuses = (
-  guesses: string[]
+  guesses: Word[]
 ): { [key: string]: CharStatus } => {
   const charObj: { [key: string]: CharStatus } = {}
 
   guesses.forEach((word) => {
-    word.split('').forEach((letter, i) => {
+    word.forEach((letter, i) => {
       if (!solution.includes(letter)) {
         // make status absent
         return (charObj[letter] = 'absent')
@@ -78,34 +84,31 @@ export const getStatuses = (
   return charObj
 }
 
-export const getGuessStatuses = (guess: string): CharStatus[] => {
-  const splitSolution = solution.split('')
-  const splitGuess = guess.split('')
-
-  const solutionCharsTaken = splitSolution.map((_) => false)
+export const getGuessStatuses = (guess: Word): CharStatus[] => {
+  const solutionCharsTaken = solution.map((_) => false)
 
   const statuses: CharStatus[] = Array.from(Array(guess.length))
 
   // handle all correct cases first
-  splitGuess.forEach((letter, i) => {
-    if (letter === splitSolution[i]) {
+  guess.forEach((letter, i) => {
+    if (letter === solution[i]) {
       statuses[i] = 'correct'
       solutionCharsTaken[i] = true
       return
     }
   })
 
-  splitGuess.forEach((letter, i) => {
+  guess.forEach((letter, i) => {
     if (statuses[i]) return
 
-    if (!splitSolution.includes(letter)) {
+    if (!solution.includes(letter)) {
       // handles the absent case
       statuses[i] = 'absent'
       return
     }
 
     // now we are left with "present"s
-    const indexOfPresentChar = splitSolution.findIndex(
+    const indexOfPresentChar = solution.findIndex(
       (x, index) => x === letter && !solutionCharsTaken[index]
     )
 

@@ -4,11 +4,12 @@ import { CheckIcon } from '@heroicons/react/outline'
 import { MiniGrid } from '../mini-grid/MiniGrid'
 import { shareStatus } from '../../lib/share'
 import { XCircleIcon } from '@heroicons/react/outline'
+import { Word } from '../../lib/statuses'
 
 type Props = {
   isOpen: boolean
   handleClose: () => void
-  guesses: string[]
+  guesses: Word[]
   handleShare: () => void
 }
 

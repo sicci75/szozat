@@ -1,16 +1,16 @@
+import { Word } from '../../lib/statuses'
 import { Cell } from './Cell'
 
 type Props = {
-  guess: string
+  guess: Word
 }
 
 export const CurrentRow = ({ guess }: Props) => {
-  const splitGuess = guess.split('')
-  const emptyCells = Array.from(Array(5 - splitGuess.length))
+  const emptyCells = Array.from(Array(5 - guess.length))
 
   return (
     <div className="flex justify-center mb-1">
-      {splitGuess.map((letter, i) => (
+      {guess.map((letter, i) => (
         <Cell key={i} value={letter} />
       ))}
       {emptyCells.map((_, i) => (

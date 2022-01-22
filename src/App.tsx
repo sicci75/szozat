@@ -14,9 +14,10 @@ import {
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage,
 } from './lib/localStorage'
+import { CharValue, Word } from './lib/statuses'
 
 function App() {
-  const [currentGuess, setCurrentGuess] = useState('')
+  const [currentGuess, setCurrentGuess] = useState<Word>([])
   const [isGameWon, setIsGameWon] = useState(false)
   const [isWinModalOpen, setIsWinModalOpen] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
@@ -26,7 +27,7 @@ function App() {
   const [isWordNotFoundAlertOpen, setIsWordNotFoundAlertOpen] = useState(false)
   const [isGameLost, setIsGameLost] = useState(false)
   const [shareComplete, setShareComplete] = useState(false)
-  const [guesses, setGuesses] = useState<string[]>(() => {
+  const [guesses, setGuesses] = useState<Word[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
     if (loaded?.solution !== solution) {
       return []
@@ -49,9 +50,9 @@ function App() {
     }
   }, [isGameWon])
 
-  const onChar = (value: string) => {
+  const onChar = (value: CharValue) => {
     if (currentGuess.length < 5 && guesses.length < 6) {
-      setCurrentGuess(`${currentGuess}${value}`)
+      setCurrentGuess([...currentGuess, value])
     }
   }
 
@@ -78,7 +79,7 @@ function App() {
 
     if (currentGuess.length === 5 && guesses.length < 6 && !isGameWon) {
       setGuesses([...guesses, currentGuess])
-      setCurrentGuess('')
+      setCurrentGuess([])
 
       if (winningWord) {
         setStats(addStatsForCompletedGame(stats, guesses.length))
@@ -97,14 +98,14 @@ function App() {
 
   return (
     <div className="py-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <Alert message="Not enough letters" isOpen={isNotEnoughLetters} />
-      <Alert message="Word not found" isOpen={isWordNotFoundAlertOpen} />
+      <Alert message="Nincs elég betű" isOpen={isNotEnoughLetters} />
+      <Alert message="Nem találtunk ilyen szót" isOpen={isWordNotFoundAlertOpen} />
       <Alert
-        message={`You lost, the word was ${solution}`}
+        message={`Vesztettél, a megoldás ez volt: ${solution}`}
         isOpen={isGameLost}
       />
       <Alert
-        message="Game copied to clipboard"
+        message="A játékot kimásoltuk a vágólapra"
         isOpen={shareComplete}
         variant="success"
       />

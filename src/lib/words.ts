@@ -1,15 +1,18 @@
 import { WORDS } from '../constants/wordlist'
 import { VALIDGUESSES } from '../constants/validGuesses'
+import { Word } from './statuses'
+import { isEqual } from 'lodash'
 
-export const isWordInWordList = (word: string) => {
-  return (
-    WORDS.includes(word.toLowerCase()) ||
-    VALIDGUESSES.includes(word.toLowerCase())
-  )
+const isWordEqual = (word1: Word, word2: Word) => {
+  return isEqual(word1, word2)
 }
 
-export const isWinningWord = (word: string) => {
-  return solution === word
+export const isWordInWordList = (word: Word) => {
+  return VALIDGUESSES.some(validWord => isWordEqual(word, validWord))
+}
+
+export const isWinningWord = (word: Word) => {
+  return isWordEqual(solution, word)
 }
 
 export const getWordOfDay = () => {
@@ -20,7 +23,7 @@ export const getWordOfDay = () => {
   const index = Math.floor((now - epochMs) / msInDay)
 
   return {
-    solution: WORDS[index].toUpperCase(),
+    solution: WORDS[index],
     solutionIndex: index,
   }
 }

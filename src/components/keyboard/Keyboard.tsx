@@ -1,13 +1,13 @@
 import { KeyValue } from '../../lib/keyboard'
-import { CHAR_VALUES, getStatuses } from '../../lib/statuses'
+import { CharValue, getStatuses, Word, isCharValue } from '../../lib/statuses'
 import { Key } from './Key'
 import { useEffect } from 'react'
 
 type Props = {
-  onChar: (value: string) => void
+  onChar: (value: CharValue) => void
   onDelete: () => void
   onEnter: () => void
-  guesses: string[]
+  guesses: Word[]
 }
 
 export const Keyboard = ({ onChar, onDelete, onEnter, guesses }: Props) => {
@@ -31,7 +31,7 @@ export const Keyboard = ({ onChar, onDelete, onEnter, guesses }: Props) => {
         onDelete()
       } else {
         const key = e.key.toUpperCase()
-        if (key.length === 1 && CHAR_VALUES.includes(key as any)) {
+        if (key.length === 1 && isCharValue(key)) {
           onChar(key)
         }
       }

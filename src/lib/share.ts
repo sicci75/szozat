@@ -1,7 +1,7 @@
-import { getGuessStatuses } from './statuses'
+import { getGuessStatuses, Word } from './statuses'
 import { solutionIndex } from './words'
 
-export const shareStatus = (guesses: string[]) => {
+export const shareStatus = (guesses: Word[]) => {
   navigator.clipboard.writeText(
     'Szózat ' +
       solutionIndex +
@@ -12,12 +12,11 @@ export const shareStatus = (guesses: string[]) => {
   )
 }
 
-export const generateEmojiGrid = (guesses: string[]) => {
+export const generateEmojiGrid = (guesses: Word[]) => {
   return guesses
     .map((guess) => {
       const status = getGuessStatuses(guess)
       return guess
-        .split('')
         .map((letter, i) => {
           switch (status[i]) {
             case 'correct':

@@ -1,7 +1,54 @@
 import fs from "fs";
-import { CHAR_VALUES, getWordLetters } from "./wordUtils";
+import { getWordLetters } from "./wordUtils";
 
 const TARGET_WORD_LENGTH = 5;
+
+export const CHAR_VALUES = [
+    'Q',
+    'W',
+    'E',
+    'R',
+    'T',
+    'Y',
+    'U',
+    'I',
+    'O',
+    'P',
+    'A',
+    'S',
+    'D',
+    'F',
+    'G',
+    'H',
+    'J',
+    'K',
+    'L',
+    'Z',
+    'X',
+    'C',
+    'V',
+    'B',
+    'N',
+    'M',
+    'Ö',
+    'Ü',
+    'Ó',
+    'Ő',
+    'Ú',
+    'É',
+    'Á',
+    'Ű',
+    'Í',
+    'CS',
+    'DZ',
+    'DZS',
+    'GY',
+    'LY',
+    'NY',
+    'SZ',
+    'TY',
+    'ZS',
+];
 
 // Parse input file
 const hungarianWordsText = fs.readFileSync("./src/magyar-szavak.txt").toString();
@@ -16,4 +63,4 @@ const wordLetters = hungarianWordsOnlyAlphabet.map(getWordLetters);
 const candidateWordLetters = wordLetters.filter(word => word.length === TARGET_WORD_LENGTH);
 // Save to file
 const jsonString = JSON.stringify(candidateWordLetters);
-fs.writeFileSync("./src/hungarian-word-letter-list.json", jsonString);
+fs.writeFileSync("../src/constants/hungarian-word-letter-list.json", jsonString);

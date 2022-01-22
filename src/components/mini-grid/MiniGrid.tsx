@@ -1,7 +1,8 @@
+import { Word } from '../../lib/statuses'
 import { MiniCompletedRow } from './MiniCompletedRow'
 
 type Props = {
-  guesses: string[]
+  guesses: Word[]
 }
 
 export const MiniGrid = ({ guesses }: Props) => {

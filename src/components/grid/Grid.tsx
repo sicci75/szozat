@@ -1,10 +1,11 @@
+import { Word } from '../../lib/statuses'
 import { CompletedRow } from './CompletedRow'
 import { CurrentRow } from './CurrentRow'
 import { EmptyRow } from './EmptyRow'
 
 type Props = {
-  guesses: string[]
-  currentGuess: string
+  guesses: Word[]
+  currentGuess: Word
 }
 
 export const Grid = ({ guesses, currentGuess }: Props) => {
