@@ -58,46 +58,45 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
                     as="h3"
                     className="text-lg leading-6 font-medium text-gray-900"
                   >
-                    How to play
+                    Szabályok
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Guess the WORDLE in 6 tries. After each guess, the color
-                      of the tiles will change to show how close your guess was
-                      to the word.
+                      Találd ki a napi szót 6 tippből! Minden tipp után a négyzetek
+                      színe jelzi, hogy mennyire kerültél közel a megoldáshoz.
                     </p>
 
                     <div className="flex justify-center mb-1 mt-4">
-                      <Cell value="W" status="correct" />
-                      <Cell value="E" />
+                      <Cell value="L" status="correct" />
                       <Cell value="A" />
-                      <Cell value="R" />
-                      <Cell value="Y" />
+                      <Cell value="K" />
+                      <Cell value="Á" />
+                      <Cell value="S" />
                     </div>
                     <p className="text-sm text-gray-500">
-                      The letter W is in the word and in the correct spot.
+                      Az L betű szerepel a szóban és jó helyen van.
                     </p>
 
                     <div className="flex justify-center mb-1 mt-4">
-                      <Cell value="P" />
-                      <Cell value="I" />
-                      <Cell value="L" status="present" />
-                      <Cell value="O" />
-                      <Cell value="T" />
-                    </div>
-                    <p className="text-sm text-gray-500">
-                      The letter L is in the word but in the wrong spot.
-                    </p>
-
-                    <div className="flex justify-center mb-1 mt-4">
-                      <Cell value="V" />
-                      <Cell value="A" />
-                      <Cell value="G" />
-                      <Cell value="U" status="absent" />
+                      <Cell value="GY" />
                       <Cell value="E" />
+                      <Cell value="R" status="present" />
+                      <Cell value="E" />
+                      <Cell value="K" />
                     </div>
                     <p className="text-sm text-gray-500">
-                      The letter U is not in the word in any spot.
+                      Az R betű szerepel a szóban, de nem jó helyen van.
+                    </p>
+
+                    <div className="flex justify-center mb-1 mt-4">
+                      <Cell value="A" />
+                      <Cell value="L" />
+                      <Cell value="SZ" />
+                      <Cell value="I" status="absent" />
+                      <Cell value="K" />
+                    </div>
+                    <p className="text-sm text-gray-500">
+                      Az I betű nem szerepel a szóban.
                     </p>
                   </div>
                 </div>
