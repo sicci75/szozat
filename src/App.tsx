@@ -125,7 +125,7 @@ function App() {
       <Alert message="Nincs elég betű" isOpen={isNotEnoughLetters} />
       <Alert message="Nem találtunk ilyen szót" isOpen={isWordNotFoundAlertOpen} />
       <Alert
-        message={`Vesztettél, a megoldás ez volt: ${solution}`}
+        message={`Vesztettél, a megoldás ez volt: ${solution.join("")}`}
         isOpen={isGameLost}
       />
       <Alert
