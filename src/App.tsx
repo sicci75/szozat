@@ -90,7 +90,7 @@ function App() {
         return setIsGameWon(true)
       }
 
-      if (guesses.length === 5) {
+      if (guesses.length === MAX_NUMBER_OF_GUESSES - 1) {
         setStats(addStatsForCompletedGame(stats, guesses.length + 1))
         setIsGameLost(true)
         return setTimeout(() => {
