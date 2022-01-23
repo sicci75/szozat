@@ -30,6 +30,9 @@ function App() {
   const [shareComplete, setShareComplete] = useState(false)
   const [guesses, setGuesses] = useState<Word[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
+    if (loaded == null) {
+      setIsInfoModalOpen(true)
+    }
     if (loaded == null || !isWordEqual(loaded.solution, solution)) {
       return []
     }
