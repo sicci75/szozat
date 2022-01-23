@@ -1,10 +1,11 @@
+import { MAX_NUMBER_OF_GUESSES } from '../constants/constants'
 import {
   GameStats,
   loadStatsFromLocalStorage,
   saveStatsToLocalStorage,
 } from './localStorage'
 
-// In stats array elements 0-5 are successes in 1-6 trys
+// In stats array elements 0-(N-1) are successes in 1-N trys
 
 export const addStatsForCompletedGame = (
   gameStats: GameStats,
@@ -15,7 +16,7 @@ export const addStatsForCompletedGame = (
 
   stats.totalGames += 1
 
-  if (count > 5) {
+  if (count > (MAX_NUMBER_OF_GUESSES - 1)) {
     // A fail situation
     stats.currentStreak = 0
     stats.gamesFailed += 1
@@ -34,8 +35,13 @@ export const addStatsForCompletedGame = (
   return stats
 }
 
+const defaultWinDistribution: number[] = [];
+for (let i = 0; i < MAX_NUMBER_OF_GUESSES; i++) {
+  defaultWinDistribution.push(0);
+}
+
 const defaultStats: GameStats = {
-  winDistribution: [0, 0, 0, 0, 0, 0],
+  winDistribution: defaultWinDistribution,
   gamesFailed: 0,
   currentStreak: 0,
   bestStreak: 0,

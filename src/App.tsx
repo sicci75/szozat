@@ -15,6 +15,7 @@ import {
   saveGameStateToLocalStorage,
 } from './lib/localStorage'
 import { CharValue, Word } from './lib/statuses'
+import { MAX_NUMBER_OF_GUESSES } from './constants/constants'
 
 function App() {
   const [currentGuess, setCurrentGuess] = useState<Word>([])
@@ -51,7 +52,7 @@ function App() {
   }, [isGameWon])
 
   const onChar = (value: CharValue) => {
-    if (currentGuess.length < 5 && guesses.length < 6) {
+    if (currentGuess.length < 5 && guesses.length < MAX_NUMBER_OF_GUESSES) {
       setCurrentGuess([...currentGuess, value])
     }
   }
@@ -77,7 +78,7 @@ function App() {
 
     const winningWord = isWinningWord(currentGuess)
 
-    if (currentGuess.length === 5 && guesses.length < 6 && !isGameWon) {
+    if (currentGuess.length === 5 && guesses.length < MAX_NUMBER_OF_GUESSES && !isGameWon) {
       setGuesses([...guesses, currentGuess])
       setCurrentGuess([])
 

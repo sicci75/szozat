@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Cell } from '../grid/Cell'
 import { XCircleIcon } from '@heroicons/react/outline'
+import { MAX_NUMBER_OF_GUESSES } from '../../constants/constants'
 
 type Props = {
   isOpen: boolean
@@ -62,7 +63,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Találd ki a napi szót 6 tippből! Minden tipp után a négyzetek
+                      Találd ki a napi szót {MAX_NUMBER_OF_GUESSES} tippből! Minden tipp után a négyzetek
                       színe jelzi, hogy mennyire kerültél közel a megoldáshoz.
                     </p>
 

@@ -1,3 +1,4 @@
+import { MAX_NUMBER_OF_GUESSES } from '../constants/constants'
 import { getGuessStatuses, Word } from './statuses'
 import { solutionIndex } from './words'
 
@@ -7,7 +8,7 @@ export const shareStatus = (guesses: Word[]) => {
       solutionIndex +
       ' ' +
       guesses.length +
-      '/6\n\n' +
+      `/${MAX_NUMBER_OF_GUESSES}\n\n` +
       generateEmojiGrid(guesses)
   )
 }
