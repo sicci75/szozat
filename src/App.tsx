@@ -8,7 +8,7 @@ import { AboutModal } from './components/modals/AboutModal'
 import { InfoModal } from './components/modals/InfoModal'
 import { WinModal } from './components/modals/WinModal'
 import { StatsModal } from './components/modals/StatsModal'
-import { isWordInWordList, isWinningWord, solution } from './lib/words'
+import { isWordInWordList, isWinningWord, solution, isWordEqual } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
   loadGameStateFromLocalStorage,
@@ -30,10 +30,10 @@ function App() {
   const [shareComplete, setShareComplete] = useState(false)
   const [guesses, setGuesses] = useState<Word[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
-    if (loaded?.solution !== solution) {
+    if (loaded == null || !isWordEqual(loaded.solution, solution)) {
       return []
     }
-    if (loaded.guesses.includes(solution)) {
+    if (loaded.guesses.some(guess => isWordEqual(guess, solution))) {
       setIsGameWon(true)
     }
     return loaded.guesses

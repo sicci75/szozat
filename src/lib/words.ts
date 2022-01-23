@@ -3,7 +3,7 @@ import { VALIDGUESSES } from '../constants/validGuesses'
 import { Word } from './statuses'
 import { isEqual } from 'lodash'
 
-const isWordEqual = (word1: Word, word2: Word) => {
+export const isWordEqual = (word1: Word, word2: Word) => {
   return isEqual(word1, word2)
 }
 
