@@ -1,6 +1,6 @@
 import { InformationCircleIcon } from '@heroicons/react/outline'
 import { ChartBarIcon } from '@heroicons/react/outline'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Alert } from './components/alerts/Alert'
 import { Grid } from './components/grid/Grid'
 import { Keyboard } from './components/keyboard/Keyboard'
@@ -41,8 +41,28 @@ function App() {
     }
     return loaded.guesses
   })
+  const [gridSize, setGridSize] = useState({ width: 0, height: 0 });
+
+  const gridContainerRef = useRef<HTMLDivElement>(null)
 
   const [stats, setStats] = useState(() => loadStats())
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (gridContainerRef.current == null) {
+        return
+      }
+      const gridContainerHeight = gridContainerRef.current.clientHeight
+      const gridWidth = Math.min(Math.floor(gridContainerHeight * (5 / MAX_NUMBER_OF_GUESSES)), 350)
+      const gridHeight = Math.floor(MAX_NUMBER_OF_GUESSES * gridWidth / 5)
+      setGridSize({ width: gridWidth, height: gridHeight })
+    }
+    window.addEventListener('resize', handleResize)
+    handleResize()
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [setGridSize])
 
   useEffect(() => {
     saveGameStateToLocalStorage({ guesses, solution })
@@ -101,7 +121,7 @@ function App() {
   }
 
   return (
-    <div className="py-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <>
       <Alert message="Nincs elég betű" isOpen={isNotEnoughLetters} />
       <Alert message="Nem találtunk ilyen szót" isOpen={isWordNotFoundAlertOpen} />
       <Alert
@@ -112,24 +132,6 @@ function App() {
         message="A játékot kimásoltuk a vágólapra"
         isOpen={shareComplete}
         variant="success"
-      />
-      <div className="flex w-80 mx-auto items-center mb-8">
-        <h1 className="text-xl grow font-bold">Szózat</h1>
-        <InformationCircleIcon
-          className="h-6 w-6 cursor-pointer"
-          onClick={() => setIsInfoModalOpen(true)}
-        />
-        <ChartBarIcon
-          className="h-6 w-6 cursor-pointer"
-          onClick={() => setIsStatsModalOpen(true)}
-        />
-      </div>
-      <Grid guesses={guesses} currentGuess={currentGuess} />
-      <Keyboard
-        onChar={onChar}
-        onDelete={onDelete}
-        onEnter={onEnter}
-        guesses={guesses}
       />
       <WinModal
         isOpen={isWinModalOpen}
@@ -156,15 +158,40 @@ function App() {
         isOpen={isAboutModalOpen}
         handleClose={() => setIsAboutModalOpen(false)}
       />
-
-      <button
-        type="button"
-        className="mx-auto mt-8 flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        onClick={() => setIsAboutModalOpen(true)}
-      >
-        A játék eredetéről
-      </button>
-    </div>
+      <div className="flex flex-col h-[100vh] py-8 w-[100%] max-w-[500px] mx-auto sm:px-6 lg:px-8">
+        <div className="flex w-80 mx-auto items-center mb-8">
+          <h1 className="text-xl grow font-bold">Szózat</h1>
+          <InformationCircleIcon
+            className="h-6 w-6 cursor-pointer"
+            onClick={() => setIsInfoModalOpen(true)}
+          />
+          <ChartBarIcon
+            className="h-6 w-6 cursor-pointer"
+            onClick={() => setIsStatsModalOpen(true)}
+          />
+        </div>
+        <div ref={gridContainerRef} className="grow flex justify-center items-center overflow-hidden mb-5">
+          <Grid guesses={guesses} currentGuess={currentGuess} size={gridSize} />
+        </div>
+        <div className="pb-5">
+          <Keyboard
+            onChar={onChar}
+            onDelete={onDelete}
+            onEnter={onEnter}
+            guesses={guesses}
+          />
+        </div>
+      </div>
+      <div className="pb-5">
+        <button
+          type="button"
+          className="mx-auto mt-8 flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onClick={() => setIsAboutModalOpen(true)}
+        >
+          A játék eredetéről
+        </button>
+      </div>
+    </>
   )
 }
 

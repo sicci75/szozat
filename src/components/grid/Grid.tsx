@@ -7,14 +7,15 @@ import { EmptyRow } from './EmptyRow'
 type Props = {
   guesses: Word[]
   currentGuess: Word
+  size: { width: number; height: number }
 }
 
-export const Grid = ({ guesses, currentGuess }: Props) => {
+export const Grid = ({ guesses, currentGuess, size }: Props) => {
   const empties =
     guesses.length < (MAX_NUMBER_OF_GUESSES - 1) ? Array.from(Array(MAX_NUMBER_OF_GUESSES - 1 - guesses.length)) : []
 
   return (
-    <div className="pb-6">
+    <div className="grid grid-rows-8 gap-1 mx-auto p-2" style={{ width: `${size.width}px`, height: `${size.height}px` }}>
       {guesses.map((guess, i) => (
         <CompletedRow key={i} guess={guess} />
       ))}

@@ -7,8 +7,8 @@ type Props = {
 }
 
 export const Cell = ({ value, status }: Props) => {
-  const classes = classnames(
-    'w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold rounded',
+  const containerClasses = classnames(
+    'grow relative inline-flex justify-center border-solid border-2 rounded before:content-[""] before:block before:pb-[100%]',
     {
       'bg-white border-slate-200': !status,
       'bg-slate-400 text-white border-slate-400': status === 'absent',
@@ -17,9 +17,15 @@ export const Cell = ({ value, status }: Props) => {
     }
   )
 
+  const classes = classnames(
+    'absolute w-[100%] h-[100%] flex items-center justify-center mx-0.5 text-lg font-bold',
+  )
+
   return (
     <>
-      <div className={classes}>{value}</div>
+      <div className={containerClasses}>
+        <div className={classes}>{value}</div>
+      </div>
     </>
   )
 }
