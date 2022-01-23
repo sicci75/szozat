@@ -2,7 +2,7 @@ import { MAX_NUMBER_OF_GUESSES } from '../constants/constants'
 import { getGuessStatuses, Word } from './statuses'
 import { solutionIndex } from './words'
 
-export const shareStatus = (guesses: Word[]) => {
+export const shareStatus = async (guesses: Word[]) => {
   const text = 'Szózat ' +
     solutionIndex +
     ' ' +
@@ -12,11 +12,14 @@ export const shareStatus = (guesses: Word[]) => {
     '\n\n' +
     'szozat.miklosdanka.com';
   if (navigator?.share != null) {
-    navigator.share({ text });
+    await navigator.share({ text })
+    return { type: "share" as const }
   }
   if (navigator?.clipboard?.writeText != null) {
-    navigator.clipboard.writeText(text)
+    await navigator.clipboard.writeText(text)
+    return { type: "clipboard" as const }
   }
+  throw new Error("No sharing methods are available")
 }
 
 export const generateEmojiGrid = (guesses: Word[]) => {

@@ -27,7 +27,6 @@ function App() {
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
   const [isWordNotFoundAlertOpen, setIsWordNotFoundAlertOpen] = useState(false)
   const [isGameLost, setIsGameLost] = useState(false)
-  const [shareComplete, setShareComplete] = useState(false)
   const [guesses, setGuesses] = useState<Word[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
     if (loaded == null) {
@@ -128,22 +127,10 @@ function App() {
         message={`Vesztettél, a megoldás ez volt: ${solution.join("")}`}
         isOpen={isGameLost}
       />
-      <Alert
-        message="A játékot kimásoltuk a vágólapra"
-        isOpen={shareComplete}
-        variant="success"
-      />
       <WinModal
         isOpen={isWinModalOpen}
         handleClose={() => setIsWinModalOpen(false)}
         guesses={guesses}
-        handleShare={() => {
-          setIsWinModalOpen(false)
-          setShareComplete(true)
-          return setTimeout(() => {
-            setShareComplete(false)
-          }, 2000)
-        }}
       />
       <InfoModal
         isOpen={isInfoModalOpen}
