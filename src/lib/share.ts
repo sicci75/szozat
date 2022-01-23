@@ -3,14 +3,20 @@ import { getGuessStatuses, Word } from './statuses'
 import { solutionIndex } from './words'
 
 export const shareStatus = (guesses: Word[]) => {
-  navigator.clipboard.writeText(
-    'Szózat ' +
-      solutionIndex +
-      ' ' +
-      guesses.length +
-      `/${MAX_NUMBER_OF_GUESSES}\n\n` +
-      generateEmojiGrid(guesses)
-  )
+  const text = 'Szózat ' +
+    solutionIndex +
+    ' ' +
+    guesses.length +
+    `/${MAX_NUMBER_OF_GUESSES}\n\n` +
+    generateEmojiGrid(guesses) +
+    '\n\n' +
+    'szozat.miklosdanka.com';
+  if (navigator?.share != null) {
+    navigator.share({ text });
+  }
+  if (navigator?.clipboard?.writeText != null) {
+    navigator.clipboard.writeText(text)
+  }
 }
 
 export const generateEmojiGrid = (guesses: Word[]) => {
