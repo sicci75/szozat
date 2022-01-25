@@ -1,5 +1,4 @@
 import fs from "fs";
-import { shuffle } from "lodash";
 import { getWordLetters } from "./wordUtils";
 
 const TARGET_WORD_LENGTH = 5;
@@ -62,7 +61,17 @@ const hungarianWordsOnlyAlphabet = hungarianWords.filter(word => {
 const wordLetters = hungarianWordsOnlyAlphabet.map(getWordLetters);
 // Reduce the list to words which may have the given number of characters
 const candidateWordLetters = wordLetters.filter(word => word.length === TARGET_WORD_LENGTH);
-const shuffledWords = shuffle(candidateWordLetters);
+// Manually add some words
+candidateWordLetters.push(
+    ["p", "á", "c", "s", "ó"],
+    ["dzs", "i", "h", "á", "d"],
+    ["c", "ó", "r", "e", "sz"],
+    ["l", "i", "m", "á", "ny"],
+    ["f", "ő", "d", "í", "j"],
+    ["ű", "r", "l", "é", "ny"],
+    ["ny", "i", "t", "v", "a"],
+);
+
 // Save to file
-const jsonString = JSON.stringify(shuffledWords);
-fs.writeFileSync("../src/constants/hungarian-puzzles.json", jsonString);
+const jsonString = JSON.stringify(candidateWordLetters);
+fs.writeFileSync("../src/constants/hungarian-word-letter-list.json", jsonString);
