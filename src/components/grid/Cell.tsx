@@ -11,9 +11,11 @@ export const Cell = ({ value, status }: Props) => {
     'grow relative inline-flex justify-center border-solid border-2 rounded before:content-[""] before:block before:pb-[100%]',
     {
       'bg-white border-slate-200': !status,
+      'border-black': value && !status,
       'bg-slate-400 text-white border-slate-400': status === 'absent',
       'bg-green-500 text-white border-green-500': status === 'correct',
       'bg-yellow-500 text-white border-yellow-500': status === 'present',
+      'cell-animation': !!value,
     }
   )
 
@@ -22,10 +24,8 @@ export const Cell = ({ value, status }: Props) => {
   )
 
   return (
-    <>
-      <div className={containerClasses}>
-        <div className={classes}>{value}</div>
-      </div>
-    </>
+    <div className={containerClasses}>
+      <div className={classes}>{value}</div>
+    </div>
   )
 }
