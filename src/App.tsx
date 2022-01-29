@@ -135,7 +135,10 @@ function App() {
       }, ALERT_TIME_MS)
     }
 
-    if (!isWordInWordList(currentGuess)) {
+    if (
+      !isWordInWordList(currentGuess) &&
+      !isWordEqual(currentGuess, solution)
+    ) {
       setIsWordNotFoundAlertOpen(true)
       return setTimeout(() => {
         setIsWordNotFoundAlertOpen(false)
