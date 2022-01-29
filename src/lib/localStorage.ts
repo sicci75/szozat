@@ -1,5 +1,5 @@
-import { Word } from "./statuses"
-import { ThemeValue } from "./theme"
+import { Word } from './statuses'
+import { ThemeValue } from './theme'
 
 const gameStateKey = 'gameState'
 const themeKey = 'colorTheme'
@@ -44,13 +44,13 @@ export const loadInitialTheme = (): ThemeValue => {
     return savedTheme as ThemeValue
   }
 
-  const userMedia = window.matchMedia('(prefers-color-scheme: dark)');
+  const userMedia = window.matchMedia('(prefers-color-scheme: dark)')
   if (userMedia.matches) {
     return 'dark'
   }
 
   return 'light' // light theme as the default
-};
+}
 
 export const saveTheme = (theme: ThemeValue) =>
-    localStorage.setItem(themeKey, theme)
+  localStorage.setItem(themeKey, theme)

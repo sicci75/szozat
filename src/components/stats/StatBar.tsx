@@ -24,8 +24,14 @@ export const StatBar = ({ gameStats }: Props) => {
     <div className="flex justify-center my-2">
       <StatItem label="Összes játék" value={gameStats.totalGames} />
       <StatItem label="Sikerráta" value={`${gameStats.successRate}%`} />
-      <StatItem label="Jelenlegi folyamatos siker" value={gameStats.currentStreak} />
-      <StatItem label="Leghosszabb folyamatos siker" value={gameStats.bestStreak} />
+      <StatItem
+        label="Jelenlegi folyamatos siker"
+        value={gameStats.currentStreak}
+      />
+      <StatItem
+        label="Leghosszabb folyamatos siker"
+        value={gameStats.bestStreak}
+      />
     </div>
   )
 }

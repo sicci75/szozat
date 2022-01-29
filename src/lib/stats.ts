@@ -16,7 +16,7 @@ export const addStatsForCompletedGame = (
 
   stats.totalGames += 1
 
-  if (count > (MAX_NUMBER_OF_GUESSES - 1)) {
+  if (count > MAX_NUMBER_OF_GUESSES - 1) {
     // A fail situation
     stats.currentStreak = 0
     stats.gamesFailed += 1
@@ -35,9 +35,9 @@ export const addStatsForCompletedGame = (
   return stats
 }
 
-const defaultWinDistribution: number[] = [];
+const defaultWinDistribution: number[] = []
 for (let i = 0; i < MAX_NUMBER_OF_GUESSES; i++) {
-  defaultWinDistribution.push(0);
+  defaultWinDistribution.push(0)
 }
 
 const defaultStats: GameStats = {

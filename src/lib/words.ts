@@ -8,7 +8,7 @@ export const isWordEqual = (word1: Word, word2: Word) => {
 }
 
 export const isWordInWordList = (word: Word) => {
-  return VALIDGUESSES.some(validWord => isWordEqual(word, validWord))
+  return VALIDGUESSES.some((validWord) => isWordEqual(word, validWord))
 }
 
 export const isWinningWord = (word: Word) => {
@@ -17,16 +17,18 @@ export const isWinningWord = (word: Word) => {
 
 export const getWordOfDay = () => {
   // January 1, 2022 Game Epoch
-  const epochMs = 1641013200000
+  const epochMs = new Date('January 1, 2022 00:00:00').valueOf()
   const now = Date.now()
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay)
-  const indexModulo = index % (WORDS.length);
+  const indexModulo = index % WORDS.length
+  const nextday = (index + 1) * msInDay + epochMs
 
   return {
     solution: WORDS[indexModulo],
     solutionIndex: indexModulo,
+    tomorrow: nextday,
   }
 }
 
-export const { solution, solutionIndex } = getWordOfDay()
+export const { solution, solutionIndex, tomorrow } = getWordOfDay()

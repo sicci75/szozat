@@ -49,17 +49,15 @@ export const CHAR_VALUES = [
 
 export type CharStatus = 'absent' | 'present' | 'correct'
 
-export type CharValue = (typeof CHAR_VALUES)[number];
+export type CharValue = typeof CHAR_VALUES[number]
 
-export type Word = readonly CharValue[];
+export type Word = readonly CharValue[]
 
 export function isCharValue(value: string): value is CharValue {
-  return CHAR_VALUES.includes(value as any);
+  return CHAR_VALUES.includes(value as any)
 }
 
-export const getStatuses = (
-  guesses: Word[]
-): { [key: string]: CharStatus } => {
+export const getStatuses = (guesses: Word[]): { [key: string]: CharStatus } => {
   const charObj: { [key: string]: CharStatus } = {}
 
   guesses.forEach((word) => {

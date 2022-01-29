@@ -21,7 +21,7 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
           href="https://github.com/hannahcode/wordle"
           className="underline font-bold"
         >
-          az angol verzió eredeti kódját itt
+          az angol verzió klónjának kódját itt
         </a>{' '}
         és{' '}
         <a
