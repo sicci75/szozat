@@ -8,7 +8,7 @@ type Props = {
 export const AboutModal = ({ isOpen, handleClose }: Props) => {
   return (
     <BaseModal title="A játékról" isOpen={isOpen} handleClose={handleClose}>
-      <p className="text-sm text-gray-500">
+      <p className="text-sm text-gray-500 dark:text-slate-200">
         Ez egy nyílt forráskódú változata a Wordle játéknak -{' '}
         <a
           href="https://github.com/mdanka/szozat"
@@ -29,7 +29,8 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
           className="underline font-bold"
         >
           próbáld ki az eredeti játékot itt
-        </a>.
+        </a>
+        .
       </p>
     </BaseModal>
   )

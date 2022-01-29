@@ -12,18 +12,14 @@ type Props = {
   guesses: Word[]
 }
 
-export const WinModal = ({
-  isOpen,
-  handleClose,
-  guesses,
-}: Props) => {
+export const WinModal = ({ isOpen, handleClose, guesses }: Props) => {
   const [shareComplete, setShareComplete] = useState(false)
   const [shareFailed, setShareFailed] = useState(false)
 
   const handleClick = useCallback(async () => {
     try {
       const { type } = await shareStatus(guesses)
-      if (type === "clipboard") {
+      if (type === 'clipboard') {
         setShareComplete(true)
         setTimeout(() => {
           setShareComplete(false)
@@ -52,15 +48,14 @@ export const WinModal = ({
       <BaseModal title="Nyertél!" isOpen={isOpen} handleClose={handleClose}>
         <div>
           <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-            <CheckIcon
-              className="h-6 w-6 text-green-600"
-              aria-hidden="true"
-            />
+            <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
           </div>
           <div className="mt-3 text-center sm:mt-5">
             <div className="mt-2">
               <MiniGrid guesses={guesses} />
-              <p className="text-sm text-gray-500">Szép munka!</p>
+              <p className="text-sm text-gray-500 dark:text-slate-200">
+                Szép munka!
+              </p>
             </div>
           </div>
         </div>

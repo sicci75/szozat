@@ -17,7 +17,7 @@ import {
 import { CharValue, Word } from './lib/statuses'
 import { MAX_NUMBER_OF_GUESSES } from './constants/constants'
 import { ThemeToggle } from "./components/theme/ThemeToggle";
-import {ThemeContext} from "./components/theme/ThemeContext";
+import { ThemeContext } from "./components/theme/ThemeContext";
 
 function App() {
   const context = React.useContext(ThemeContext);
@@ -149,7 +149,7 @@ function App() {
         isOpen={isAboutModalOpen}
         handleClose={() => setIsAboutModalOpen(false)}
       />
-      <div className="bg-white dark:bg-black transition-all">
+      <div className="bg-white dark:bg-gray-800 transition-all">
         <div className="absolute right-3 top-7">
           <ThemeToggle />
         </div>
