@@ -12,8 +12,7 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
         Ez egy nyílt forráskódú, magyar változata a Wordle játéknak.
       </p>
       <p className="text-sm text-gray-500 dark:text-slate-200 pb-2">
-        Nézd meg
-        {' '}
+        Nézd meg{' '}
         <a
           href="https://github.com/mdanka/szozat"
           className="underline font-bold"
@@ -22,20 +21,17 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
         </a>
       </p>
       <p className="text-sm text-gray-500 dark:text-slate-200 pb-2">
-        A szólistát
-        {' '}
+        A szólistát{' '}
         <a
           href="https://gist.github.com/Konstantinusz/f9517357e46fa827c3736031ac8d01c7"
           className="underline font-bold"
         >
           innen
-        </a>
-        {' '}
+        </a>{' '}
         szereztük.
       </p>
       <p className="text-sm text-gray-500 dark:text-slate-200 pb-2">
-        Az angol verzió klónjának
-        {' '}
+        Az angol verzió klónjának{' '}
         <a
           href="https://github.com/hannahcode/wordle"
           className="underline font-bold"
@@ -44,8 +40,7 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
         </a>
       </p>
       <p className="text-sm text-gray-500 dark:text-slate-200 pb-2">
-        Az eredeti játékot pedig
-        {' '}
+        Az eredeti játékot pedig{' '}
         <a
           href="https://www.powerlanguage.co.uk/wordle/"
           className="underline font-bold"
@@ -54,8 +49,8 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
         </a>
       </p>
       <p className="text-sm text-gray-500 dark:text-slate-200">
-        A magyar verzió tech múzsája <strong>Vőfély Rozi</strong>, a programozói módosításokat
-        pedig <strong>Danka Miklós</strong> végezte.
+        A magyar verzió tech múzsája <strong>Vőfély Rozi</strong>, a programozói
+        módosításokat pedig <strong>Danka Miklós</strong> végezte.
       </p>
     </BaseModal>
   )

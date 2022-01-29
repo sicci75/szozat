@@ -2,6 +2,8 @@ import { WORDS } from '../constants/wordlist'
 import { VALIDGUESSES } from '../constants/validGuesses'
 import { Word } from './statuses'
 import { isEqual } from 'lodash'
+import { getWordLetters } from './hungarianWordUtils'
+import { getDecodedHashParam } from './hashUtils'
 
 export const isWordEqual = (word1: Word, word2: Word) => {
   return isEqual(word1, word2)
@@ -31,4 +33,39 @@ export const getWordOfDay = () => {
   }
 }
 
-export const { solution, solutionIndex, tomorrow } = getWordOfDay()
+export const getWordFromUrl = () => {
+  const customSolution = getDecodedHashParam('s')
+  if (customSolution === undefined) {
+    return undefined
+  }
+  const customCreator = getDecodedHashParam('c') ?? 'ismeretlen szerző'
+  const customWord = getWordLetters(customSolution).map((char) =>
+    char.toUpperCase()
+  ) as Word
+  if (customWord.length !== 5) {
+    return undefined
+  }
+  return {
+    solution: customWord,
+    solutionCreator: customCreator,
+  }
+}
+
+export const getCurrentWord = () => {
+  const wordFromUrl = getWordFromUrl()
+  const wordOfDay = getWordOfDay()
+  if (wordFromUrl !== undefined) {
+    return {
+      ...wordFromUrl,
+      solutionIndex: undefined,
+      tomorrow: undefined,
+    }
+  }
+  return {
+    ...wordOfDay,
+    solutionCreator: undefined,
+  }
+}
+
+export const { solution, solutionIndex, solutionCreator, tomorrow } =
+  getCurrentWord()

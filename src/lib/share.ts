@@ -1,17 +1,21 @@
 import { MAX_NUMBER_OF_GUESSES } from '../constants/constants'
 import { getGuessStatuses, Word } from './statuses'
-import { solutionIndex } from './words'
+import { solutionIndex, solutionCreator } from './words'
 
 export const shareStatus = async (guesses: Word[], lost: boolean) => {
+  const identifier =
+    solutionCreator !== undefined
+      ? 'saját feladvány: ' + solutionCreator
+      : solutionIndex + '. feladvány'
   const text =
     'Szózat ' +
-    solutionIndex +
-    '. feladvány ' +
+    identifier +
+    ' ' +
     (lost ? 'X' : guesses.length) +
     `/${MAX_NUMBER_OF_GUESSES}\n\n` +
     generateEmojiGrid(guesses) +
     '\n\n' +
-    'szozat.miklosdanka.com'
+    window.location.href
   if (navigator?.share != null) {
     await navigator.share({ text })
     return { type: 'share' as const }

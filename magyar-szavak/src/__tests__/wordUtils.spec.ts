@@ -1,6 +1,6 @@
 // import "mocha";
 import { assert } from "chai";
-import { getWordLetters } from "../wordUtils";
+import { getWordLetters } from "../../../src/lib/hungarianWordUtils";
 
 
 

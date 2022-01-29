@@ -1,5 +1,5 @@
 import fs from "fs";
-import { getWordLetters } from "./wordUtils";
+import { getWordLetters } from "../../src/lib/hungarianWordUtils";
 
 const TARGET_WORD_LENGTH = 5;
 
