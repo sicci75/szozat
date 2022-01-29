@@ -15,7 +15,8 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         a négyzetek színe jelzi, hogy mennyire kerültél közel a megoldáshoz.
       </p>
 
-      <div className="flex justify-center mb-1 mt-4">
+      {/* <div className="flex justify-center mb-1 mt-4"> */}
+      <div className="grid grid-cols-5 gap-1 mb-1 mt-4">
         <Cell value="L" status="correct" />
         <Cell value="A" />
         <Cell value="K" />
@@ -26,7 +27,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         Az L betű szerepel a szóban és jó helyen van.
       </p>
 
-      <div className="flex justify-center mb-1 mt-4">
+      <div className="grid grid-cols-5 gap-1 mb-1 mt-4">
         <Cell value="GY" />
         <Cell value="E" />
         <Cell value="R" status="present" />
@@ -37,7 +38,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         Az R betű szerepel a szóban, de nem jó helyen van.
       </p>
 
-      <div className="flex justify-center mb-1 mt-4">
+      <div className="grid grid-cols-5 gap-1 mb-1 mt-4">
         <Cell value="A" />
         <Cell value="L" />
         <Cell value="SZ" />
