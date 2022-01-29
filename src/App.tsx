@@ -1,6 +1,6 @@
 import { InformationCircleIcon } from '@heroicons/react/outline'
 import { ChartBarIcon } from '@heroicons/react/outline'
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Alert } from './components/alerts/Alert'
 import { Grid } from './components/grid/Grid'
 import { Keyboard } from './components/keyboard/Keyboard'
@@ -16,11 +16,8 @@ import {
 } from './lib/localStorage'
 import { CharValue, Word } from './lib/statuses'
 import { MAX_NUMBER_OF_GUESSES } from './constants/constants'
-import { ThemeToggle } from "./components/theme/ThemeToggle";
-import {ThemeContext} from "./components/theme/ThemeContext";
 
 function App() {
-  const context = React.useContext(ThemeContext);
   const [currentGuess, setCurrentGuess] = useState<Word>([])
   const [isGameWon, setIsGameWon] = useState(false)
   const [isWinModalOpen, setIsWinModalOpen] = useState(false)
@@ -124,7 +121,7 @@ function App() {
   }
 
   return (
-    <div className={context.theme}>
+    <>
       <Alert message="Nincs elég betű" isOpen={isNotEnoughLetters} />
       <Alert message="Nem találtunk ilyen szót" isOpen={isWordNotFoundAlertOpen} />
       <Alert
@@ -149,45 +146,40 @@ function App() {
         isOpen={isAboutModalOpen}
         handleClose={() => setIsAboutModalOpen(false)}
       />
-      <div className="bg-white dark:bg-black transition-all">
-        <div className="absolute right-3 top-7">
-          <ThemeToggle />
+      <div className="flex flex-col h-[100vh] py-8 w-[100%] max-w-[500px] mx-auto sm:px-6 lg:px-8">
+        <div className="flex w-80 mx-auto items-center mb-8">
+          <h1 className="text-xl grow font-bold">Szózat</h1>
+          <InformationCircleIcon
+            className="h-6 w-6 cursor-pointer"
+            onClick={() => setIsInfoModalOpen(true)}
+          />
+          <ChartBarIcon
+            className="h-6 w-6 cursor-pointer"
+            onClick={() => setIsStatsModalOpen(true)}
+          />
         </div>
-        <div className="flex flex-col h-[100vh] py-8 w-[100%] max-w-[500px] mx-auto sm:px-6 lg:px-8">
-          <div className="flex w-80 mx-auto items-center mb-8">
-            <h1 className="text-xl grow font-bold dark:text-gray-300">Szózat</h1>
-            <InformationCircleIcon
-              className="h-6 w-6 cursor-pointer dark:text-gray-300"
-              onClick={() => setIsInfoModalOpen(true)}
-            />
-            <ChartBarIcon
-              className="h-6 w-6 cursor-pointer dark:text-gray-300"
-              onClick={() => setIsStatsModalOpen(true)}
-            />
-          </div>
-          <div ref={gridContainerRef} className="grow flex justify-center items-center overflow-hidden mb-5">
-            <Grid guesses={guesses} currentGuess={currentGuess} size={gridSize} />
-          </div>
-          <div className="pb-5">
-            <Keyboard
-              onChar={onChar}
-              onDelete={onDelete}
-              onEnter={onEnter}
-              guesses={guesses}
-            />
-          </div>
+        <div ref={gridContainerRef} className="grow flex justify-center items-center overflow-hidden mb-5">
+          <Grid guesses={guesses} currentGuess={currentGuess} size={gridSize} />
         </div>
         <div className="pb-5">
-          <button
-              type="button"
-              className="mx-auto mt-8 flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 select-none"
-              onClick={() => setIsAboutModalOpen(true)}
-          >
-            A játék eredetéről
-          </button>
+          <Keyboard
+            onChar={onChar}
+            onDelete={onDelete}
+            onEnter={onEnter}
+            guesses={guesses}
+          />
         </div>
       </div>
-    </div>
+      <div className="pb-5">
+        <button
+          type="button"
+          className="mx-auto mt-8 flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 select-none"
+          onClick={() => setIsAboutModalOpen(true)}
+        >
+          A játék eredetéről
+        </button>
+      </div>
+    </>
   )
 }
 

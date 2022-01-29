@@ -1,8 +1,6 @@
 import { Word } from "./statuses"
-import { ThemeValue } from "./theme"
 
 const gameStateKey = 'gameState'
-const themeKey = 'colorTheme'
 
 type StoredGameState = {
   guesses: Word[]
@@ -37,20 +35,3 @@ export const loadStatsFromLocalStorage = () => {
   const stats = localStorage.getItem(gameStatKey)
   return stats ? (JSON.parse(stats) as GameStats) : null
 }
-
-export const loadInitialTheme = (): ThemeValue => {
-  const savedTheme = localStorage.getItem(themeKey)
-  if (typeof savedTheme === 'string') {
-    return savedTheme as ThemeValue
-  }
-
-  const userMedia = window.matchMedia('(prefers-color-scheme: dark)');
-  if (userMedia.matches) {
-    return 'dark'
-  }
-
-  return 'light' // light theme as the default
-};
-
-export const saveTheme = (theme: ThemeValue) =>
-    localStorage.setItem(themeKey, theme)
