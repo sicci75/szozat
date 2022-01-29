@@ -150,12 +150,10 @@ function App() {
         handleClose={() => setIsAboutModalOpen(false)}
       />
       <div className="bg-white dark:bg-gray-800 transition-all">
-        <div className="absolute right-3 top-7">
-          <ThemeToggle />
-        </div>
         <div className="flex flex-col h-[100vh] py-8 w-[100%] max-w-[500px] mx-auto sm:px-6 lg:px-8">
           <div className="flex w-80 mx-auto items-center mb-8">
             <h1 className="text-xl grow font-bold dark:text-gray-300">Szózat</h1>
+            <ThemeToggle />
             <InformationCircleIcon
               className="h-6 w-6 cursor-pointer dark:text-gray-300"
               onClick={() => setIsInfoModalOpen(true)}
