@@ -1,5 +1,8 @@
-import { InformationCircleIcon } from '@heroicons/react/outline'
-import { ChartBarIcon } from '@heroicons/react/outline'
+import {
+  InformationCircleIcon,
+  ChartBarIcon,
+  PlusCircleIcon,
+} from '@heroicons/react/outline'
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Alert } from './components/alerts/Alert'
 import { Grid } from './components/grid/Grid'
@@ -23,6 +26,7 @@ import { CharValue, Word } from './lib/statuses'
 import { MAX_NUMBER_OF_GUESSES } from './constants/constants'
 import { ThemeToggle } from './components/theme/ThemeToggle'
 import { ThemeContext } from './components/theme/ThemeContext'
+import { CreatePuzzleModal } from './components/modals/CreatePuzzleModal'
 
 const ALERT_TIME_MS = 2000
 
@@ -34,6 +38,7 @@ function App() {
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
   const [isNotEnoughLetters, setIsNotEnoughLetters] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
+  const [isCreatePuzzleModalOpen, setIsCreatePuzzleModalOpen] = useState(false)
   const [isWordNotFoundAlertOpen, setIsWordNotFoundAlertOpen] = useState(false)
   const [shareComplete, setShareComplete] = useState(false)
   const [shareFailed, setShareFailed] = useState(false)
@@ -217,6 +222,10 @@ function App() {
         isOpen={isAboutModalOpen}
         handleClose={() => setIsAboutModalOpen(false)}
       />
+      <CreatePuzzleModal
+        isOpen={isCreatePuzzleModalOpen}
+        handleClose={() => setIsCreatePuzzleModalOpen(false)}
+      />
       <div className="bg-white dark:bg-gray-800 transition-all">
         <div className="flex flex-col h-[100vh] py-8 w-[100%] max-w-[500px] mx-auto sm:px-6 lg:px-8">
           <div className="flex w-80 mx-auto items-center mb-8">
@@ -231,6 +240,10 @@ function App() {
             <ChartBarIcon
               className="h-6 w-6 cursor-pointer dark:text-gray-300"
               onClick={() => setIsStatsModalOpen(true)}
+            />
+            <PlusCircleIcon
+              className="h-6 w-6 cursor-pointer dark:text-gray-300"
+              onClick={() => setIsCreatePuzzleModalOpen(true)}
             />
           </div>
           <div

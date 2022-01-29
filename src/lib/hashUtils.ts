@@ -1,3 +1,6 @@
+export const HASH_PARAM_KEY_SOLUTION = 's'
+export const HASH_PARAM_KEY_CREATOR = 'c'
+
 const getHashParams = () => {
   const hash = window.location.hash.substring(1)
   const hashComponents = hash.split('&')
@@ -14,16 +17,41 @@ const getHashParams = () => {
   return hashParams
 }
 
-export const encodeHashParam = (value: string) => {
-  return encodeURIComponent(btoa(value))
+const createHashString = (params: { key: string; value: string }[]) => {
+  let firstParam = true
+  let hashString = '#'
+  for (const param of params) {
+    const { key, value } = param
+    hashString = `${hashString}${firstParam ? '' : '&'}${key}=${value}`
+    firstParam = false
+  }
+  return hashString
+}
+
+const encodeHashParam = (value: string) => {
+  return encodeURIComponent(btoa(unescape(encodeURIComponent(value))))
 }
 
 const decodeHashParam = (value: string) => {
-  return atob(decodeURIComponent(value))
+  return decodeURIComponent(escape(atob(decodeURIComponent(value))))
 }
 
 export const getDecodedHashParam = (key: string) => {
   const hashParams = getHashParams()
   const valueEncoded = hashParams[key]
   return valueEncoded === undefined ? undefined : decodeHashParam(valueEncoded)
+}
+
+export const createCustomGameUrl = (solution: string, creator: string) => {
+  const solutionValue = encodeHashParam(solution)
+  const creatorValue = encodeHashParam(creator)
+  const urlBeginning = window.location.href.split('#')[0]
+  const hashString = createHashString([
+    { key: HASH_PARAM_KEY_SOLUTION, value: solutionValue },
+    { key: HASH_PARAM_KEY_CREATOR, value: creatorValue },
+  ])
+  const fullUrl = `${urlBeginning}${
+    urlBeginning.endsWith('/') ? '' : '/'
+  }${hashString}`
+  return fullUrl
 }

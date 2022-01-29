@@ -3,7 +3,11 @@ import { VALIDGUESSES } from '../constants/validGuesses'
 import { Word } from './statuses'
 import { isEqual } from 'lodash'
 import { getWordLetters } from './hungarianWordUtils'
-import { getDecodedHashParam } from './hashUtils'
+import {
+  getDecodedHashParam,
+  HASH_PARAM_KEY_CREATOR,
+  HASH_PARAM_KEY_SOLUTION,
+} from './hashUtils'
 
 export const isWordEqual = (word1: Word, word2: Word) => {
   return isEqual(word1, word2)
@@ -34,11 +38,12 @@ export const getWordOfDay = () => {
 }
 
 export const getWordFromUrl = () => {
-  const customSolution = getDecodedHashParam('s')
+  const customSolution = getDecodedHashParam(HASH_PARAM_KEY_SOLUTION)
   if (customSolution === undefined) {
     return undefined
   }
-  const customCreator = getDecodedHashParam('c') ?? 'ismeretlen szerző'
+  const customCreator =
+    getDecodedHashParam(HASH_PARAM_KEY_CREATOR) ?? 'ismeretlen szerző'
   const customWord = getWordLetters(customSolution).map((char) =>
     char.toUpperCase()
   ) as Word
