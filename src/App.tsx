@@ -2,6 +2,7 @@ import {
   InformationCircleIcon,
   ChartBarIcon,
   PlusCircleIcon,
+  SunIcon,
 } from '@heroicons/react/outline'
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Alert } from './components/alerts/Alert'
@@ -16,7 +17,15 @@ import {
   solution,
   isWordEqual,
 } from './lib/words'
-import { WIN_MESSAGES } from './constants/strings'
+import {
+  WORDLE_TITLE,
+  WIN_MESSAGES,
+  GAME_COPIED_MESSAGE,
+  ABOUT_GAME_MESSAGE,
+  NOT_ENOUGH_LETTERS_MESSAGE,
+  WORD_NOT_FOUND_MESSAGE,
+  CORRECT_WORD_MESSAGE,
+} from './constants/strings'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
   loadGameStateFromLocalStorage,
@@ -24,15 +33,18 @@ import {
 } from './lib/localStorage'
 import { CharValue, Word } from './lib/statuses'
 import { MAX_NUMBER_OF_GUESSES } from './constants/constants'
-import { ThemeToggle } from './components/theme/ThemeToggle'
-import { ThemeContext } from './components/theme/ThemeContext'
 import { CreatePuzzleModal } from './components/modals/CreatePuzzleModal'
 import { DOUBLE_LETTERS } from './lib/hungarianWordUtils'
+
+import './App.css'
 
 const ALERT_TIME_MS = 2000
 
 function App() {
-  const context = React.useContext(ThemeContext)
+  const prefersDarkMode = window.matchMedia(
+    '(prefers-color-scheme: dark)'
+  ).matches
+
   const [currentGuess, setCurrentGuess] = useState<Word>([])
   const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
@@ -44,6 +56,13 @@ function App() {
   const [shareComplete, setShareComplete] = useState(false)
   const [shareFailed, setShareFailed] = useState(false)
   const [isGameLost, setIsGameLost] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(
+    localStorage.getItem('theme')
+      ? localStorage.getItem('theme') === 'dark'
+      : prefersDarkMode
+      ? true
+      : false
+  )
   const [successAlert, setSuccessAlert] = useState('')
   const [guesses, setGuesses] = useState<Word[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
@@ -90,6 +109,19 @@ function App() {
       window.removeEventListener('resize', handleResize)
     }
   }, [setGridSize])
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [isDarkMode])
+
+  const handleDarkMode = (isDark: boolean) => {
+    setIsDarkMode(isDark)
+    localStorage.setItem('theme', isDark ? 'dark' : 'light')
+  }
 
   useEffect(() => {
     saveGameStateToLocalStorage({ guesses, solution })
@@ -144,7 +176,7 @@ function App() {
             ...currentGuess.slice(0, currentGuess.length - 2),
             ...tripleMatch.letters.map((letter) => letter.toUpperCase()),
           ] as Word)
-    if (newGuessWithTriple !== undefined && newGuessWithTriple.length <= 6) {
+    if (newGuessWithTriple !== undefined && newGuessWithTriple.length <= 5) {
       setCurrentGuess(newGuessWithTriple)
       return
     }
@@ -159,15 +191,12 @@ function App() {
             ...currentGuess.slice(0, currentGuess.length - 1),
             ...doubleMatch.letters.map((letter) => letter.toUpperCase()),
           ] as Word)
-    console.log(potentialDoubleLetter)
-    console.log(doubleMatch)
-    console.log(newGuessWithDouble)
-    if (newGuessWithDouble !== undefined && newGuessWithDouble.length <= 6) {
+    if (newGuessWithDouble !== undefined && newGuessWithDouble.length <= 5) {
       setCurrentGuess(newGuessWithDouble)
       return
     }
     const newGuessWithSingle = [...currentGuess, value]
-    if (newGuessWithSingle.length <= 6) {
+    if (newGuessWithSingle.length <= 5) {
       setCurrentGuess(newGuessWithSingle)
       return
     }
@@ -235,23 +264,20 @@ function App() {
   }, [])
 
   return (
-    <div className={context.theme}>
-      <Alert message="Nincs elég betű" isOpen={isNotEnoughLetters} />
+    <>
+      <Alert message={NOT_ENOUGH_LETTERS_MESSAGE} isOpen={isNotEnoughLetters} />
       <Alert
-        message="Nem találtunk ilyen szót"
+        message={WORD_NOT_FOUND_MESSAGE}
         isOpen={isWordNotFoundAlertOpen}
       />
-      <Alert
-        message={`Vesztettél, a megoldás ez volt: ${solution.join('')}`}
-        isOpen={isGameLost}
-      />
+      <Alert message={CORRECT_WORD_MESSAGE(solution)} isOpen={isGameLost} />
       <Alert
         message={successAlert}
         isOpen={successAlert !== ''}
         variant="success"
       />
       <Alert
-        message="A játékot kimásoltuk a vágólapra"
+        message={GAME_COPIED_MESSAGE}
         isOpen={shareComplete}
         variant="success"
       />
@@ -282,23 +308,26 @@ function App() {
         isOpen={isCreatePuzzleModalOpen}
         handleClose={() => setIsCreatePuzzleModalOpen(false)}
       />
-      <div className="bg-white dark:bg-gray-800 transition-all">
+      <div className="transition-all">
         <div className="flex flex-col h-[100vh] pt-2 w-[100%] max-w-[500px] mx-auto sm:px-6 lg:px-8">
           <div className="flex w-80 mx-auto items-center mb-2">
-            <h1 className="text-xl grow font-bold dark:text-gray-300">
-              Szózat
+            <h1 className="text-xl grow font-bold dark:text-white">
+              {WORDLE_TITLE}
             </h1>
-            <ThemeToggle />
+            <SunIcon
+              className="h-6 w-6 cursor-pointer dark:stroke-white"
+              onClick={() => handleDarkMode(!isDarkMode)}
+            />
             <InformationCircleIcon
-              className="h-6 w-6 cursor-pointer dark:text-gray-300"
+              className="h-6 w-6 cursor-pointer dark:stroke-white"
               onClick={() => setIsInfoModalOpen(true)}
             />
             <ChartBarIcon
-              className="h-6 w-6 cursor-pointer dark:text-gray-300"
+              className="h-6 w-6 cursor-pointer dark:stroke-white"
               onClick={() => setIsStatsModalOpen(true)}
             />
             <PlusCircleIcon
-              className="h-6 w-6 cursor-pointer dark:text-gray-300"
+              className="h-6 w-6 cursor-pointer dark:stroke-white"
               onClick={() => setIsCreatePuzzleModalOpen(true)}
             />
           </div>
@@ -327,11 +356,11 @@ function App() {
             className="mx-auto mt-8 flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 select-none"
             onClick={() => setIsAboutModalOpen(true)}
           >
-            A játék eredetéről
+            {ABOUT_GAME_MESSAGE}
           </button>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

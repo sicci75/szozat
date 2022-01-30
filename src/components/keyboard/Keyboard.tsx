@@ -2,6 +2,7 @@ import { KeyValue } from '../../lib/keyboard'
 import { CharValue, getStatuses, Word, isCharValue } from '../../lib/statuses'
 import { Key } from './Key'
 import { useEffect } from 'react'
+import { ENTER_TEXT, DELETE_TEXT } from '../../constants/strings'
 
 type Props = {
   onChar: (value: CharValue) => void
@@ -88,7 +89,7 @@ export const Keyboard = ({ onChar, onDelete, onEnter, guesses }: Props) => {
       </div>
       <div className="flex justify-center">
         <Key width={65.4} value="ENTER" onClick={onClick}>
-          Beküld
+          {ENTER_TEXT}
         </Key>
         <Key value="Í" onClick={onClick} status={charStatuses['Í']} />
         <Key value="Y" onClick={onClick} status={charStatuses['Y']} />
@@ -99,7 +100,7 @@ export const Keyboard = ({ onChar, onDelete, onEnter, guesses }: Props) => {
         <Key value="N" onClick={onClick} status={charStatuses['N']} />
         <Key value="M" onClick={onClick} status={charStatuses['M']} />
         <Key width={65.4} value="DELETE" onClick={onClick}>
-          Töröl
+          {DELETE_TEXT}
         </Key>
       </div>
     </div>

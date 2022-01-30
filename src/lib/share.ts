@@ -1,6 +1,7 @@
 import { MAX_NUMBER_OF_GUESSES } from '../constants/constants'
 import { getGuessStatuses, Word } from './statuses'
 import { solutionIndex, solutionCreator } from './words'
+import { WORDLE_TITLE } from '../constants/strings'
 
 export const getShareText = (guesses: Word[], lost: boolean) => {
   const identifier =
@@ -8,14 +9,11 @@ export const getShareText = (guesses: Word[], lost: boolean) => {
       ? 'Jelige: ' + solutionCreator
       : solutionIndex + '. nap'
   const text =
-    'Szózat - ' +
-    identifier +
-    ' - ' +
-    (lost ? 'X' : guesses.length) +
-    `/${MAX_NUMBER_OF_GUESSES}\n\n` +
+    `${WORDLE_TITLE} - ${identifier} - ${
+      lost ? 'X' : guesses.length
+    }/${MAX_NUMBER_OF_GUESSES}\n\n` +
     generateEmojiGrid(guesses) +
-    '\n\n' +
-    window.location.href
+    `\n\n${window.location.href}`
   return text
 }
 
