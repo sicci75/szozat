@@ -71,8 +71,8 @@ export const CreatePuzzleModal = ({ isOpen, handleClose }: Props) => {
       )}
 
       <p className="text-gray-500 dark:text-slate-200 pb-2 pt-5">
-        Add meg a neved (hogy láthassák a játékosok, ki készítette a
-        feladványt):
+        Válassz egy jeligét (hogy beazonosíthassák a játékosok - de vigyázz, ne
+        utalj a megoldásra!):
       </p>
       <div className="pb-2">
         <input
@@ -84,7 +84,7 @@ export const CreatePuzzleModal = ({ isOpen, handleClose }: Props) => {
       </div>
       {creator.length === 0 && (
         <p className="text-sm text-red-500 dark:text-red-500 pb-2">
-          Még hiányzik a neved.
+          Még hiányzik a jelige.
         </p>
       )}
 

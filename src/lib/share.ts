@@ -5,7 +5,7 @@ import { solutionIndex, solutionCreator } from './words'
 export const getShareText = (guesses: Word[], lost: boolean) => {
   const identifier =
     solutionCreator !== undefined
-      ? 'Egyéni feladvány: ' + solutionCreator
+      ? 'Jelige: ' + solutionCreator
       : solutionIndex + '. nap'
   const text =
     'Szózat - ' +

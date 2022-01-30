@@ -79,7 +79,9 @@ export const StatsModal = ({
                 )}
                 {solutionCreator && (
                   <div>
-                    <p>A feladvány készítője: {solutionCreator}</p>
+                    <p>
+                      A feladvány jeligéje: <strong>{solutionCreator}</strong>
+                    </p>
                   </div>
                 )}
                 <button
