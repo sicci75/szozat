@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { loadInitialTheme } from '../../lib/localStorage'
+import { loadInitialTheme, saveTheme } from '../../lib/localStorage'
 import { ThemeValue } from '../../lib/theme'
 
 export const ThemeContext = React.createContext<{
@@ -14,8 +14,13 @@ type ThemeProviderProps = {
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = React.useState(loadInitialTheme)
 
+  const setAndSaveTheme = (value: ThemeValue) => {
+    saveTheme(value)
+    setTheme(value)
+  }
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme: setAndSaveTheme }}>
       {children}
     </ThemeContext.Provider>
   )
