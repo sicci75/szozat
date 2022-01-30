@@ -64,12 +64,14 @@ const candidateWordLetters = wordLetters.filter(word => word.length === TARGET_W
 // Manually add some words
 candidateWordLetters.push(
     ["p", "á", "c", "s", "ó"],
-    ["dzs", "i", "h", "á", "d"],
-    ["c", "ó", "r", "e", "sz"],
-    ["l", "i", "m", "á", "ny"],
-    ["f", "ő", "d", "í", "j"],
-    ["ű", "r", "l", "é", "ny"],
-    ["ny", "i", "t", "v", "a"],
+    getWordLetters("dzsihád"),
+    getWordLetters("córesz"),
+    getWordLetters("limány"),
+    getWordLetters("fődíj"),
+    getWordLetters("űrlény"),
+    getWordLetters("nyitva"),
+    getWordLetters("tórusz"),
+    getWordLetters("térkő"),
 );
 
 // Save to file
