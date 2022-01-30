@@ -27,6 +27,7 @@ import { MAX_NUMBER_OF_GUESSES } from './constants/constants'
 import { ThemeToggle } from './components/theme/ThemeToggle'
 import { ThemeContext } from './components/theme/ThemeContext'
 import { CreatePuzzleModal } from './components/modals/CreatePuzzleModal'
+import { DOUBLE_LETTERS } from './lib/hungarianWordUtils'
 
 const ALERT_TIME_MS = 2000
 
@@ -111,12 +112,63 @@ function App() {
   }, [isGameWon, isGameLost])
 
   const onChar = (value: CharValue) => {
-    if (
-      currentGuess.length < 5 &&
-      guesses.length < MAX_NUMBER_OF_GUESSES &&
-      !isGameWon
-    ) {
-      setCurrentGuess([...currentGuess, value])
+    if (guesses.length >= MAX_NUMBER_OF_GUESSES || isGameWon) {
+      return
+    }
+    const currentGuessLastChar =
+      currentGuess.length > 0
+        ? currentGuess[currentGuess.length - 1]
+        : undefined
+    const currentGuessPenultimateChar =
+      currentGuess.length > 1
+        ? currentGuess[currentGuess.length - 2]
+        : undefined
+    const potentialDoubleLetter =
+      currentGuessLastChar === undefined
+        ? undefined
+        : `${currentGuessLastChar}${value}`
+    const potentialTripleLetter =
+      currentGuessLastChar === undefined ||
+      currentGuessPenultimateChar === undefined
+        ? undefined
+        : `${currentGuessPenultimateChar}${currentGuessLastChar}${value}`
+    const tripleMatch = DOUBLE_LETTERS.find(
+      (doubleLetter) =>
+        doubleLetter.form.toUpperCase() === potentialTripleLetter
+    )
+    const newGuessWithTriple =
+      tripleMatch === undefined
+        ? undefined
+        : ([
+            ...currentGuess.slice(0, currentGuess.length - 2),
+            ...tripleMatch.letters.map((letter) => letter.toUpperCase()),
+          ] as Word)
+    if (newGuessWithTriple !== undefined && newGuessWithTriple.length <= 6) {
+      setCurrentGuess(newGuessWithTriple)
+      return
+    }
+    const doubleMatch = DOUBLE_LETTERS.find(
+      (doubleLetter) =>
+        doubleLetter.form.toUpperCase() === potentialDoubleLetter
+    )
+    const newGuessWithDouble =
+      doubleMatch === undefined
+        ? undefined
+        : ([
+            ...currentGuess.slice(0, currentGuess.length - 1),
+            ...doubleMatch.letters.map((letter) => letter.toUpperCase()),
+          ] as Word)
+    console.log(potentialDoubleLetter)
+    console.log(doubleMatch)
+    console.log(newGuessWithDouble)
+    if (newGuessWithDouble !== undefined && newGuessWithDouble.length <= 6) {
+      setCurrentGuess(newGuessWithDouble)
+      return
+    }
+    const newGuessWithSingle = [...currentGuess, value]
+    if (newGuessWithSingle.length <= 6) {
+      setCurrentGuess(newGuessWithSingle)
+      return
     }
   }
 
